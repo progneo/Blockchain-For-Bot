@@ -55,10 +55,8 @@ public class BlockMiner
     public User GetUserById(int id)
     {
         var user = new User();
-        foreach (var transaction in from block in Blockchain
-                 from transaction in block.TransactionList
-                 where transaction.SenderId == id
-                 select transaction)
+        foreach (var transaction in Blockchain.SelectMany(block =>
+                     block.TransactionList.Where(transaction => transaction.SenderId == id)))
         {
             switch (transaction.Attribute)
             {

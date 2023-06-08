@@ -95,14 +95,25 @@ public class WebServerService : BackgroundService
 
         //Post http://localhost:port/api/add
         [Route(HttpVerbs.Post, "/add")]
-        public void AddTransaction()
+        public string AddTransaction()
         {
+            var availableAttributes = new List<string> {"Balance", "Level", "Experience"};
             var data = HttpContext.GetRequestDataAsync<Transaction>();
+            
+            if (!availableAttributes.Any(data.Result.Attribute.Contains)) return "wrong attribute";
+            
             _transactionPool.AddRaw(data.Result);
-            if (_transactionPool.TransactionsCount() >= 3)
-            {
-                _blockMiner.MineBlock();
-            }
+            _blockMiner.MineBlock();
+
+            return "success";
+        }
+        
+        //GET http://localhost:port/api/users/{userId?}
+        [Route(HttpVerbs.Get, "/users/{userId?}")]
+        public string GetUserById(int userId)
+        {
+            var user = _blockMiner.GetUserById(userId);
+            return JsonSerializer.Serialize(user);
         }
     }
 }
