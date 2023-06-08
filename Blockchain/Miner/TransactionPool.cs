@@ -1,4 +1,6 @@
-namespace discord_bot_blockchain.Model;
+using Blockchain.Model;
+
+namespace Blockchain.Miner;
 
 public class TransactionPool
 {
@@ -11,6 +13,14 @@ public class TransactionPool
         _rawTransactionList = new List<Transaction>();
     }
 
+    public int TransactionsCount()
+    {
+        lock (_lockObj)
+        {        
+            return _rawTransactionList.Count;
+        }
+    }
+    
     public void AddRaw(Transaction transaction)
     {
         lock (_lockObj)

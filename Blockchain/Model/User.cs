@@ -1,4 +1,4 @@
-namespace discord_bot_blockchain.Model;
+namespace Blockchain.Model;
 
 public class User
 {
