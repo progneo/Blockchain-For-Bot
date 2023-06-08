@@ -56,7 +56,7 @@ public class BlockMiner
     {
         var user = new User();
         foreach (var transaction in Blockchain.SelectMany(block =>
-                     block.TransactionList.Where(transaction => transaction.SenderId == id)))
+                     block.TransactionList.Where(transaction => transaction.UserId == id)))
         {
             switch (transaction.Attribute)
             {

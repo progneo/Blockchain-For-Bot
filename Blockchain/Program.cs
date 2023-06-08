@@ -29,10 +29,7 @@ public static class Program
             services.AddHostedService<WebServerService>();
         });
 
-        builder.ConfigureLogging((context, loggingBuilder) =>
-        {
-            loggingBuilder.AddConsole();
-        });
+        builder.ConfigureLogging((context, loggingBuilder) => { loggingBuilder.AddConsole(); });
 
         await builder.RunConsoleAsync();
     }

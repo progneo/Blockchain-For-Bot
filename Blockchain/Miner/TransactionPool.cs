@@ -16,11 +16,11 @@ public class TransactionPool
     public int TransactionsCount()
     {
         lock (_lockObj)
-        {        
+        {
             return _rawTransactionList.Count;
         }
     }
-    
+
     public void AddRaw(Transaction transaction)
     {
         lock (_lockObj)

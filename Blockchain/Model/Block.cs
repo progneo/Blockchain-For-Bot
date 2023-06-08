@@ -36,6 +36,7 @@ public class Block
             Nonce++;
             Hash = CalculateHash();
         }
+
         Console.WriteLine("Block mined: " + Hash);
     }
 }

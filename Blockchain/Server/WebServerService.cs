@@ -16,7 +16,7 @@ public class WebServerService : BackgroundService
 
     private readonly WebServer _server;
     private readonly string _url;
-        
+
     public WebServerService(TransactionPool transactionPool, BlockMiner blockMiner)
     {
         _url = $"http://localhost:{5000}/";
@@ -25,7 +25,7 @@ public class WebServerService : BackgroundService
         _transactionPool = transactionPool;
         _blockMiner = blockMiner;
     }
-        
+
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
@@ -39,7 +39,7 @@ public class WebServerService : BackgroundService
         Console.WriteLine("http server stopped");
         return Task.CompletedTask;
     }
-        
+
     private WebServer CreateWebServer(string url)
     {
         var server = new WebServer(o => o
@@ -97,17 +97,17 @@ public class WebServerService : BackgroundService
         [Route(HttpVerbs.Post, "/add")]
         public string AddTransaction()
         {
-            var availableAttributes = new List<string> {"Balance", "Level", "Experience"};
+            var availableAttributes = new List<string> { "Balance", "Level", "Experience" };
             var data = HttpContext.GetRequestDataAsync<Transaction>();
-            
+
             if (!availableAttributes.Any(data.Result.Attribute.Contains)) return "wrong attribute";
-            
+
             _transactionPool.AddRaw(data.Result);
             _blockMiner.MineBlock();
 
             return "success";
         }
-        
+
         //GET http://localhost:port/api/users/{userId?}
         [Route(HttpVerbs.Get, "/users/{userId?}")]
         public string GetUserById(int userId)
